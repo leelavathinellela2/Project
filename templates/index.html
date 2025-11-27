@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Prediction System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h2>ML-Based Health Prediction System</h2>
+
+    <form action="/predict" method="post">
+        <label>Fever (in Fahrenheit):</label>
+        <input type="text" name="fever" required>
+
+        <label>Cough (1 = Yes, 0 = No):</label>
+        <input type="text" name="cough" required>
+
+        <label>Shortness of Breath (1 = Yes, 0 = No):</label>
+        <input type="text" name="breath" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <h3>{{ output }}</h3>
+</body>
+</html>
