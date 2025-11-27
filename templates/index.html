@@ -1,25 +1,21 @@
-<!DOCTYPE html>
+<!-- templates/index.html -->
+<!doctype html>
 <html>
-<head>
-    <title>Health Prediction System</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <h2>ML-Based Health Prediction System</h2>
-
+  <head>
+    <meta charset="utf-8">
+    <title>Infection Predictor</title>
+  </head>
+  <body>
+    <h1>Infection Predictor</h1>
     <form action="/predict" method="post">
-        <label>Fever (in Fahrenheit):</label>
-        <input type="text" name="fever" required>
-
-        <label>Cough (1 = Yes, 0 = No):</label>
-        <input type="text" name="cough" required>
-
-        <label>Shortness of Breath (1 = Yes, 0 = No):</label>
-        <input type="text" name="breath" required>
-
-        <button type="submit">Predict</button>
+      <label>Fever (°F): <input type="text" name="fever" required></label><br><br>
+      <label>Cough (0 = no, 1 = yes): <input type="number" name="cough" min="0" max="1" required></label><br><br>
+      <label>Breath Issue (0 = no, 1 = yes): <input type="number" name="breath" min="0" max="1" required></label><br><br>
+      <button type="submit">Predict</button>
     </form>
 
-    <h3>{{ output }}</h3>
-</body>
+    {% if output %}
+      <h2>Result: {{ output }}</h2>
+    {% endif %}
+  </body>
 </html>

@@ -1,30 +1,33 @@
 # train.py
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 import pickle
+import numpy as np
+from sklearn.linear_model import LogisticRegression
 
-# SAMPLE dataset (you can replace with your health dataset)
-data = {
-    'fever': [98, 101, 102, 99, 100, 103, 97, 105],
-    'cough': [1, 1, 0, 0, 1, 1, 0, 1],
-    'breath_shortness': [0, 1, 1, 0, 0, 1, 0, 1],
-    'infection': [0, 1, 1, 0, 0, 1, 0, 1]
-}
+# Example dummy dataset
+# Columns: [fever, cough (0/1), breath (0/1)]
+X = np.array([
+    [98.0, 0, 0],
+    [99.0, 0, 0],
+    [100.5, 1, 0],
+    [101.0, 1, 1],
+    [102.2, 1, 1],
+    [97.5, 0, 0],
+    [103.0, 1, 1],
+    [99.5, 0, 1],
+    [100.0, 1, 0],
+    [101.5, 1, 1]
+])
 
-df = pd.DataFrame(data)
+# Labels: 1 = infected/high chance, 0 = low chance
+y = np.array([0, 0, 0, 1, 1, 0, 1, 0, 0, 1])
 
-X = df[['fever', 'cough', 'breath_shortness']]
-y = df['infection']
-
-# Train-test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-# Model
+# Train a simple classifier
 model = LogisticRegression()
-model.fit(X_train, y_train)
+model.fit(X, y)
 
-# Save model
-pickle.dump(model, open("model.pkl", "wb"))
+# Save the trained model
+with open("model.pkl", "wb") as f:
+    pickle.dump(model, f)
 
-print("Model trained and saved successfully!")
+print("Saved model.pkl (size: {:.1f} KB)".format((open("model.pkl","rb").seek(0,2) or 0)/1024 if False else (0)))
+# (The above print avoids reading file size reliably on all systems; you will see the file in your folder)
